@@ -16,7 +16,7 @@ verified slave core from the companion `mb-rtu` project is vendored in
 ## Repository layout
 
 ```
-mb-gateway/
+modbus-tcp-rtu-gateway/
 ├── src/
 │   ├── mbap.hpp / mbap.cpp   MBAP header codec, stream decoder
 │   ├── gateway.hpp / .cpp    TCP/RTU translation and gateway exceptions
