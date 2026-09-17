@@ -1,0 +1,21 @@
+# Build output
+build/
+*.o
+gateway
+gateway-armhf
+
+# Coverage
+*.gcov
+*.gcda
+*.gcno
+
+# Run logs (regenerate with `make demo`)
+*.log
+logs/*.log
+!logs/.gitkeep
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store

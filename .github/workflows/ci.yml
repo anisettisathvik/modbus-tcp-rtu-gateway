@@ -1,0 +1,29 @@
+name: gateway-verification
+on: [push, pull_request]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { submodules: recursive }
+      - name: Install
+        run: sudo apt-get update -qq && sudo apt-get install -y g++ tshark tcpdump
+      - name: ThreadSanitizer, routing invariant
+        run: make verify THREADS=32 PER=10000
+      - name: AddressSanitizer + UBSan
+        run: make asan THREADS=8 PER=3000
+      - name: Line coverage
+        run: make coverage
+      - name: Static analysis
+        run: make analyze
+      - name: ARM Cortex-A cross build
+        run: |
+          sudo apt-get install -y g++-arm-linux-gnueabihf file
+          make arm
+          file build/gateway-armhf | grep -q "ARM"
+      - name: Build server
+        run: make gateway
+      - name: 100-master soak
+        run: ./tools/run_soak.sh 100 200
+      - name: Fault soak, 15% drop + 15% corrupt
+        run: ./tools/run_fault_soak.sh 20 300
