@@ -213,5 +213,10 @@ quoted for C++: every STL call generates exception-unwind branches that never
 fire without a throw, so the figure would measure unexercised library code
 rather than unexercised logic.
 
-**CI has not executed.** The workflow in `.github/workflows/ci.yml` is
-syntax-valid but has never run, as this repository had no remote until now.
+**CI runs on every push.** The workflow in `.github/workflows/ci.yml` runs the
+full suite on a clean Ubuntu runner: the routing invariant under
+ThreadSanitizer, the same suite under AddressSanitizer and UBSan, line
+coverage, static analysis, the ARM Cortex-A cross build, the 100-master soak
+and the fault soak. It passes on a runner that has never seen the development
+machine, so the results above are independently reproducible rather than
+self-reported.
